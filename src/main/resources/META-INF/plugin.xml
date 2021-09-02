@@ -1,0 +1,35 @@
+<idea-plugin>
+    <id>dev.fritz2.html2fritz2</id>
+    <name>HTML to fritz2</name>
+    <vendor url="https://fritz2.dev">fritz2</vendor>
+
+    <description><![CDATA[
+An Intellij plugin to copy/paste from HTML to fritz2.
+<br>
+This plugin simplifies the transformation of HTML code to a fritz2 DSL doing the conversion during a copy/paste.
+]]></description>
+
+    <change-notes>
+    </change-notes>
+
+
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <copyPastePostProcessor
+                implementation="dev.fritz2.htmlplugin.ide.ConvertTextHTMLCopyPasteProcessor"/>
+    </extensions>
+
+
+    <actions>
+        <action id="io.data2viz.kotlinx.htmlplugin.ide.ConvertHTMLToFritz2Action"
+                class="dev.fritz2.htmlplugin.ide.ConvertHTMLToFritz2Action"
+                text="Convert HTML To fritz2"
+                description="Convert selected HTML code to fritz2 code">
+            <keyboard-shortcut keymap="$default" first-keystroke="shift meta alt X"/>
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+        <!--        </group>-->
+    </actions>
+</idea-plugin>
