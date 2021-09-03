@@ -5,6 +5,7 @@ interface HtmlElement
 
 
 class HtmlText(val text: String) : HtmlElement
+class HtmlComment(val text: String) : HtmlElement
 
 
 class HtmlTag(val tagName: String) : HtmlElement {

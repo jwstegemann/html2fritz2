@@ -58,17 +58,22 @@ object HtmlPsiToHtmlDataConverter {
                     null
                 }
 
-                is XmlText  -> psiElement.text.toHtmlText()
-                else        -> null
+                is XmlComment -> psiElement.text.toHtmlComment()
+                is XmlText -> if (psiElement.text.trimStart()
+                        .startsWith("""<!--""")
+                ) psiElement.text.toHtmlComment() else psiElement.text.toHtmlText()
+                else -> null
             }
 
     private fun XmlAttribute.toHtmlAttribute(): HtmlAttribute = HtmlAttribute(name, value)
 
     private fun String.toHtmlText(): HtmlText? = if (trim().isEmpty()) null else HtmlText(trim())
 
+    private fun String.toHtmlComment(): HtmlComment? = if (trim().isEmpty()) null else HtmlComment(trim())
+
     private fun isStartsWithXmlElement(psiElement: PsiElement): Boolean {
 
-        logger.debug {"isStartsWithXmlElement type $psiElement"}
+        logger.debug { "isStartsWithXmlElement type $psiElement" }
 
         var isStartsWithXmlElement: Boolean
         when (psiElement) {

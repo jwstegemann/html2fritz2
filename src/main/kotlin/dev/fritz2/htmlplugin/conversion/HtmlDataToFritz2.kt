@@ -9,6 +9,7 @@ fun HtmlElement.toFritz2(currentIndent: Int = 0): String =
     when (this) {
         is HtmlTag -> toFritz2(currentIndent)
         is HtmlText -> toFritz2Text(currentIndent)
+        is HtmlComment -> toFritz2Comment(currentIndent)
         else -> error("${this.javaClass.typeName} not supported")
     }
 
@@ -111,6 +112,11 @@ fun HtmlText.toFritz2Text(currentIndent: Int = 0): String =
         append("+ \"\"\"$text\"\"\"")
     }.toString()
 
+fun HtmlComment.toFritz2Comment(currentIndent: Int = 0): String =
+    StringBuilder().apply {
+        addTabIndent(currentIndent)
+        append("/* $text */")
+    }.toString()
 
 fun Collection<HtmlElement>.toFritz2(currentIndent: Int = 0): String =
     joinToString("\n") { it.toFritz2(currentIndent) }
@@ -164,6 +170,7 @@ fun HtmlAttribute.toFritz2DataAttribute(attrName: String, attrValue: String): St
 
 
 val fritz2Attributes = listOf(
+    "fill",
     "xmlns",
     "d",
     "for",
