@@ -303,7 +303,9 @@ val attributesWithoutQuotes = listOf(
     "span",
     "start",
     "value",
-    "width"
+    "width",
+    "selected",
+    "defaultSelected"
 )
 
 val fritz2Tags = listOf(
