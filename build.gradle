@@ -1,7 +1,7 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.intellij' version '0.4.21'
-    id "org.jetbrains.kotlin.jvm" version "1.3.72"
+//    id 'java'
+    id 'org.jetbrains.intellij' version '1.4.0'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
 }
 
 group 'dev.fritz2'
@@ -14,18 +14,14 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-
+//    testCompile group: 'junit', name: 'junit', version: '4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
-    compile fileTree(dir: 'libs', include: '*.jar')
-
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    version '2018.1'
-    plugins = ['Kotlin']
+    version = '2021.3'
+    plugins = ['java', 'Kotlin']
     patchPluginXml {
         untilBuild = "" // Be forward compatible
         // sinceBuild is inferred from the version above
