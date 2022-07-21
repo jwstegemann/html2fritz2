@@ -70,11 +70,16 @@ class ConvertTextHTMLCopyPasteProcessor : CopyPastePostProcessor<TextBlockTransf
         return result
     }
 
-    override fun processTransferableData(project: Project, editor: Editor,
-                                         bounds: RangeMarker,
-                                         caretOffset: Int,
-                                         indented: Ref<Boolean>,
-                                         textValues: MutableList<TextBlockTransferableData>) {
+    override fun processTransferableData(
+        project: Project?,
+        editor: Editor?,
+        bounds: RangeMarker?,
+        caretOffset: Int,
+        indented: Ref<in Boolean>?,
+        textValues: MutableList<out TextBlockTransferableData>?
+    ) {
+        if (project == null || editor == null || textValues == null || bounds == null) return
+
 
         val isDump = DumbService.getInstance(project).isDumb
         logger.debug { "processTransferableData isDump=$isDump" }
