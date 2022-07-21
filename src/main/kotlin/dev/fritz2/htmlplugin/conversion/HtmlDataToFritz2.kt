@@ -126,7 +126,9 @@ fun HtmlAttribute.toFritz2Attribute(owner: HtmlTag? = null): String {
     val htmlAttrName = attrName
 
     val attrName = fritz2Attributes.find { it.equals(htmlAttrName, ignoreCase = true) }
-    val attrValue = if (attributesWithoutQuotes.contains(attrName)) """$value""" else """"$value""""
+    val attrValue = attrName?.let {
+        if (it.lowercase() == "true" || attributesWithoutQuotes.contains(it)) "$value" else """"$value""""
+    }
 
     return if (attrName != null) {
         val fritz2AttrName = when (attrName) {
@@ -142,12 +144,11 @@ fun HtmlAttribute.toFritz2Attribute(owner: HtmlTag? = null): String {
     } else {
         toFritz2DataAttribute(htmlAttrName, attrValue)
     }
-
 }
 
 fun HtmlAttribute.toFritz2Parameter(owner: HtmlTag? = null): String {
     // remap for fritz2
-    val attrNameLowerCase = attrName.toLowerCase()
+    val attrNameLowerCase = attrName.lowercase()
     val attrValue = "$value"
     val attrName = when (attrNameLowerCase) {
         "class" -> "baseClass"
@@ -158,15 +159,14 @@ fun HtmlAttribute.toFritz2Parameter(owner: HtmlTag? = null): String {
         value != null -> """$attrName = "$attrValue" """.trim()
         else -> """$attrName = true""".trim()
     }
-
 }
 
 
-fun HtmlAttribute.toFritz2DataAttribute(attrName: String, attrValue: String): String =
+fun HtmlAttribute.toFritz2DataAttribute(attrName: String, attrValue: String?): String =
     when {
-        !value.isNullOrEmpty() -> """attr("$attrName", "$value")""".trim()
-        else -> """attr("$attrName", true, trueValue = "")""".trim()
-    }
+        !attrValue.isNullOrEmpty() -> """attr("$attrName", "$attrValue")"""
+        else -> """attr("$attrName", true)"""
+    }.trim()
 
 
 val fritz2Attributes = listOf(
