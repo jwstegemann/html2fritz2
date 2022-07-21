@@ -13,8 +13,8 @@ This plugin simplifies the transformation of HTML code to a fritz2 DSL doing the
     </change-notes>
 
 
-    <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.kotlin</depends>
+    <!--<depends>com.intellij.modules.java</depends>-->
 
     <extensions defaultExtensionNs="com.intellij">
         <copyPastePostProcessor
@@ -30,6 +30,5 @@ This plugin simplifies the transformation of HTML code to a fritz2 DSL doing the
             <keyboard-shortcut keymap="$default" first-keystroke="shift meta alt X"/>
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>
-        <!--        </group>-->
     </actions>
 </idea-plugin>
